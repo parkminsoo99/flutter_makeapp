@@ -32,7 +32,7 @@ class _SaleState extends State<SaleState> {
             leading: IconButton(
                 icon: Icon(Icons.arrow_back),
                 onPressed: () {
-                  print("my로 이동!");
+                  Navigator.pop(context);
                 }),
             actions: [
               IconButton(
