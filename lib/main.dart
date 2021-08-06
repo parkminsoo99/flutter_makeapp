@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import './sale.dart';
-
 void main() => runApp(MaterialApp(title: 'MyApp', home: MainPage()));
 
-const List<String> items = ['물건A', '물건B', '물건C'];
+final List<String> items = ['물건A', '물건B', '물건C'];
+
+final Color color = Colors.green;
+
+final Color buttonColor = Colors.white.withOpacity(0.6);
+
+Test123 x = new Test123(); //클래스로 전달
+SaleState Sale = new SaleState();
 
 class MainPage extends StatefulWidget {
   MainPage({Key? key}) : super(key: key);
@@ -37,6 +43,12 @@ class _PageZero extends State<MainPage> {
               onPressed: () {
                 print("검색기능");
               }),
+          IconButton(
+            icon: Icon(Icons.layers),
+            onPressed: () {
+              print("카테고리기능");
+            },
+          ),
           IconButton(
               icon: Icon(Icons.login),
               onPressed: () {
@@ -131,21 +143,32 @@ class Donation extends StatelessWidget {
 //MY_Class => 나의 정보
 
 class My extends StatelessWidget {
-  static const Color color = Colors.green;
-
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        _topPage(),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            middleButton(color, Icons.volunteer_activism, '나눔내역', context),
-            middleButton(color, Icons.shopping_cart, '구매내역', context),
-            middleButton(color, Icons.loyalty, '관심목록', context),
-          ],
-        ),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        children: <Widget>[
+          _topPage(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              middleButton(color, Icons.volunteer_activism, '나눔내역', context, Sale),
+              middleButton(color, Icons.shopping_cart, '구매내역', context, x),
+              middleButton(color, Icons.loyalty, '관심목록', context, x),
+            ],
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              bottomButton(buttonColor, Icons.person, '프로필 보기'),
+              bottomButton(buttonColor, Icons.savings, '나누리 포인트'),
+              bottomButton(buttonColor, Icons.category, '관심 카테고리'),
+              bottomButton(buttonColor, Icons.settings, '설정'),
+              bottomButton(buttonColor, Icons.notifications, '공지사항'),
+              bottomButton(buttonColor, Icons.contact_phone, '고객센터'),
+            ],
+          ),
+        ],
+      ),
     );
   }
 
@@ -206,23 +229,23 @@ class My extends StatelessWidget {
   }
 
   Column middleButton(
-      Color color, IconData icon, String label, BuildContext context) {
+      Color color, IconData icon, String label, BuildContext context, test) {
     return Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            margin: EdgeInsets.only(top: 15),
+            margin: EdgeInsets.only(top: 20),
             child: GestureDetector(
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => SaleState()));
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => test));
               },
               child: Column(
                 children: [
                   Icon(icon, color: color),
                   Container(
-                    margin: EdgeInsets.only(top: 8),
+                    margin: EdgeInsets.only(top: 8, bottom: 30),
                     child: Text(label, style: TextStyle(color: color)),
                   ),
                 ],
@@ -230,5 +253,42 @@ class My extends StatelessWidget {
             ),
           )
         ]);
+  }
+
+  Column bottomButton(
+      Color buttonColor, IconData settingIcon, String settingText) {
+    return Column(
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: <Widget>[
+        GestureDetector(
+            child: Container(
+              color: buttonColor,
+              height: 70,
+              width: double.infinity,
+              child: Row(children: <Widget>[
+                Container(
+                  margin: EdgeInsets.only(left: 30),
+                  child: Icon(settingIcon),
+                ),
+                Container(
+                  margin: EdgeInsets.only(left: 50),
+                  child: Text(settingText),
+                ),
+              ]),
+            ),
+            onTap: () {
+              print('test1');
+            }),
+      ],
+    );
+  }
+}
+
+class Test123 extends StatelessWidget {
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Text("test123123"),
+    );
   }
 }
