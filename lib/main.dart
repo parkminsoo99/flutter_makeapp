@@ -8,7 +8,6 @@ final Color color = Colors.green;
 
 final Color buttonColor = Colors.white.withOpacity(0.6);
 
-Test123 x = new Test123(); //클래스로 전달
 SaleState Sale = new SaleState();
 
 class MainPage extends StatefulWidget {
@@ -152,8 +151,8 @@ class My extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               middleButton(color, Icons.volunteer_activism, '나눔내역', context, Sale),
-              middleButton(color, Icons.shopping_cart, '구매내역', context, x),
-              middleButton(color, Icons.loyalty, '관심목록', context, x),
+              middleButton(color, Icons.shopping_cart, '구매내역', context, Sale),
+              middleButton(color, Icons.loyalty, '관심목록', context, Sale),
             ],
           ),
           Column(
@@ -285,10 +284,3 @@ class My extends StatelessWidget {
   }
 }
 
-class Test123 extends StatelessWidget {
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Text("test123123"),
-    );
-  }
-}

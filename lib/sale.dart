@@ -60,25 +60,6 @@ class _SaleState extends State<SaleState> {
               ],
             ),
           ), //appBar
-
-          bottomNavigationBar: BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            backgroundColor: Color(0xff6200EE),
-            selectedItemColor: Colors.white,
-            unselectedItemColor: Colors.white.withOpacity(.60),
-            currentIndex: _selectedIndex,
-            onTap: (int index) {
-              setState(() {
-                _selectedIndex = index;
-              });
-            },
-            items: [
-              BottomNavigationBarItem(icon: Icon(Icons.home), label: 'home'),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.account_circle), label: 'My'),
-            ],
-          ), //bottomNavigationBar
-
           body: TabBarView(
             children: <Widget>[
               Tab(child: itemlist()),
