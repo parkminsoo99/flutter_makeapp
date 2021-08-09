@@ -14,6 +14,30 @@ class _Communication extends State<Communication> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        appBar: AppBar(
+          title: Text("나누니동네"),
+          centerTitle: true,
+          elevation: 6,
+          leading: Text("동네이름"),
+          actions: [
+            IconButton(
+                icon: Icon(Icons.search),
+                onPressed: () {
+                  print("검색기능");
+                }),
+            IconButton(
+              icon: Icon(Icons.layers),
+              onPressed: () {
+                print("카테고리기능");
+              },
+            ),
+            IconButton(
+                icon: Icon(Icons.login),
+                onPressed: () {
+                  print("로그인기능");
+                }),
+          ],
+        ),
         body: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
@@ -22,9 +46,9 @@ class _Communication extends State<Communication> {
               child: Column(
                 children: <Widget>[
                   categories(color, Icons.home, '전체'),
-                  SizedBox(height:70),
+                  SizedBox(height: 70),
                   categories(color, Icons.home, '전체'),
-                  SizedBox(height:70),
+                  SizedBox(height: 70),
                   categories(color, Icons.home, '전체'),
                 ],
               ),
@@ -46,9 +70,9 @@ class _Communication extends State<Communication> {
               child: Column(
                 children: <Widget>[
                   categories(color, Icons.home, '전체'),
-                  SizedBox(height:70),
+                  SizedBox(height: 70),
                   categories(color, Icons.home, '전체'),
-                  SizedBox(height:70),
+                  SizedBox(height: 70),
                   categories(color, Icons.home, '전체'),
                 ],
               ),
