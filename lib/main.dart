@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import './sale.dart';
+import './donation.dart';
+import './communicationPage.dart';
 void main() => runApp(MaterialApp(title: 'MyApp', home: MainPage()));
 
 final List<String> items = ['물건A', '물건B', '물건C'];
@@ -28,7 +30,12 @@ class _PageZero extends State<MainPage> {
     Donation(),
     My(),
   ];
+Scaffold num123(){
+  return Scaffold(
 
+
+  );
+}
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -107,7 +114,7 @@ class Home extends StatelessWidget {
 class Community extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Text("test1"),
+      body : Communication(),
     );
   }
 }
@@ -134,7 +141,7 @@ class Chat extends StatelessWidget {
 class Donation extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Text("test1"),
+      body: MyApp(),
     );
   }
 }
