@@ -3,25 +3,28 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
+//https://changjoopark.medium.com/flutter%EC%97%90%EC%84%9C-json-%EC%9D%91%EB%8B%B5%EC%9D%84-%EB%8B%A4%EB%A3%A8%EB%8A%94-%EB%B0%A9%EB%B2%95-df17ac6a3a3d 참고
 //분야별기부단체 API 호출
 List data = [];
 
 class Post {
+  final String? 	keyword; //키워드
   final String? adres; //주소
   final String? dmstcTelno; //전화번호
   final String? hmpgByid; //홈페이지 주소
   final String? nanmbyNm; //기부단체이름
   final String? rcritRealm; //분야
-  Post(
-      {this.adres,
-      this.dmstcTelno,
-      this.hmpgByid,
-      this.nanmbyNm,
-      this.rcritRealm});
+  Post({
+    this.keyword,
+    this.adres,
+    this.dmstcTelno,
+    this.hmpgByid,
+    this.nanmbyNm,
+    this.rcritRealm});
 
   factory Post.fromJson(Map<String, dynamic> json) {
     return Post(
+      keyword: json['keyword'],
       adres: json['adres'],
       dmstcTelno: json['adstcTelno'],
       hmpgByid: json['hmpgByid'],
@@ -32,15 +35,14 @@ class Post {
 }
 
 Future<Post> fetchPost() async {
-  final response = await http.get(Uri.parse('http://openapi.1365.go.kr/openapi/'
-      'service/rest/ContributionGroupService/'
-      'getCntrCategoryGrpList?serviceKey='
-      '18s%2BB50tjzpz3fb6K9W3KAo9asQ7eXtSX16oFMBs%2BzBpUxJRUVX6Sx5QxiSQ8CXQMowMIHe%2BK5MAekcMLcVuzw%3D%3D&'));
+  final url = 'http://openapi.1365.go.kr/openapi/service/rest/ContributionGroupService/getCntrAreaGrpList';
+  final response = await http.get(Uri.parse(url));
 
   if (response.statusCode == 200) {
-    return Post.fromJson(json.decode(response.body));
+    final jsonBody = json.decode(response.body);
+    return Post.fromJson(jsonBody);
   } else {
-    throw Exception('Failed to load pose');
+    throw Exception('Failed to load post');
   }
 }
 
@@ -61,7 +63,6 @@ class _DonationPage extends State<DonationPage> {
     super.initState();
     futurePost = fetchPost();
   }
-
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
@@ -84,13 +85,36 @@ class _DonationPage extends State<DonationPage> {
             ),
           ],
         ),
-        body: ListView.builder(
-          itemCount: data == null ? 0 : data.length,
-          itemBuilder: (BuildContext context, int index) {
-            return new Card(
-              child: new Text(data[index]["title"]),
-            );
-          },
+        body: new Column(
+          children: <Widget> [
+          FutureBuilder(
+              future: fetchPost(),
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                if (snapshot.hasData) {
+                  //final hmpgByid = snapshot.data.hmpgByid;
+                  //final nanmbyNm = snapshot.data.nanmbyNm;
+                  final keyword = snapshot.data.keyword;
+                  return Column(
+                    children: <Widget>[
+                      /*Text(
+                        hmpgByid,
+                      ),
+                      Text(
+                          nanmbyNm,
+                      ),^/
+                       */
+                      Text(
+                        keyword,
+                      ),
+                    ],
+                  );
+                } else if (snapshot.hasError) {
+                  return Text("${snapshot.error}");
+                }
+                return CircularProgressIndicator();
+              },
+          ),
+          ],
         ),
       ),
     );
